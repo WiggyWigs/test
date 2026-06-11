@@ -29,6 +29,10 @@
   --deco-orange-light: #d4724a;
   --deco-gold: #b8860b;
   --deco-dark: #1a0a00;
+
+  /* Side border widths — tweak these to align with your header/footer border position */
+  --border-outer: 28px;
+  --border-inner: 38px;
 }
 
 /* ---- BASE ---- */
@@ -59,6 +63,48 @@ body::before {
   opacity: 0.5;
 }
 
+/* ============================================
+   RUNNING SIDE BORDERS
+   These replicate the vertical lines from your
+   header/footer images down the full page body.
+   Adjust --border-outer and --border-inner above
+   to line them up with the actual image borders.
+============================================ */
+
+/* Wrapper that carries the side borders */
+.page-body {
+  position: relative;
+  z-index: 10;
+}
+
+/* Left border set */
+.page-body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--border-outer);
+  width: 0;
+  border-left: 2px solid var(--deco-dark);
+  border-right: 1.5px solid var(--deco-orange);
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Right border set */
+.page-body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: var(--border-outer);
+  width: 0;
+  border-right: 2px solid var(--deco-dark);
+  border-left: 1.5px solid var(--deco-orange);
+  pointer-events: none;
+  z-index: 20;
+}
+
 /* ---- HEADER IMAGE ---- */
 .site-header {
   position: relative;
@@ -73,13 +119,24 @@ body::before {
   display: block;
 }
 
+/* Soft fade on the bottom of the header into parchment */
+.site-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--parchment));
+  pointer-events: none;
+}
+
 /* ---- PAGE TITLE BLOCK ---- */
 .page-title {
   position: relative;
   z-index: 10;
   text-align: center;
-  padding: 3rem 2rem 1.5rem;
-  background: linear-gradient(180deg, var(--parchment) 0%, var(--parchment-mid) 100%);
+  padding: 2.5rem 5rem 1.5rem;
 }
 
 .page-title .eyebrow {
@@ -115,7 +172,7 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  padding: 1rem 2rem;
+  padding: 1rem 5rem;
   position: relative;
   z-index: 10;
 }
@@ -151,7 +208,7 @@ body::before {
   z-index: 10;
   max-width: 900px;
   margin: 0 auto;
-  padding: 0 2rem 4rem;
+  padding: 0 5rem 4rem;
 }
 
 /* ---- MANAGER CARD ---- */
@@ -174,7 +231,7 @@ body::before {
   border-bottom: none;
 }
 
-/* Rank number — the ghost behind each card */
+/* Rank number — ghost behind each card */
 .manager-card .rank-ghost {
   position: absolute;
   top: 1rem;
@@ -279,7 +336,6 @@ body::before {
   width: 100%;
   z-index: 10;
   line-height: 0;
-  margin-top: 2rem;
 }
 
 .site-footer img {
@@ -288,10 +344,36 @@ body::before {
   display: block;
 }
 
+/* Soft fade on the top of the footer from parchment */
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to top, transparent, var(--parchment));
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* ---- RESPONSIVE ---- */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  :root {
+    --border-outer: 12px;
+    --border-inner: 20px;
+  }
+
   .rankings {
-    padding: 0 1.25rem 3rem;
+    padding: 0 2rem 3rem;
+  }
+
+  .page-title {
+    padding: 2rem 2.5rem 1.5rem;
+  }
+
+  .deco-divider {
+    padding: 1rem 2.5rem;
   }
 
   .stats-bar {
