@@ -8,16 +8,15 @@
 </head>
 <body>
 
-  <!-- ===== HEADER IMAGE ===== -->
-  <header class="site-header">
-    <img src="images/header.png" alt="Fox League Header" />
-  </header>
+  <!-- ===== DECORATIVE HEADER OVERLAY ===== -->
+  <!-- Sits on top of the background. Art Deco border/corner treatment. -->
+  <div class="deco-header">
+    <img src="images/header.png" alt="" role="presentation" />
+  </div>
 
-  <!-- ===== PAGE BODY (carries running side borders) ===== -->
-  <div class="page-body">
-
-  <!-- ===== PAGE TITLE ===== -->
+  <!-- ===== LEAGUE LOGO + PAGE TITLE ===== -->
   <section class="page-title">
+    <img class="league-logo" src="images/logo.png" alt="Fox League" />
     <p class="eyebrow">All-Time Power Rankings</p>
     <h1>The Manager Index</h1>
     <p class="subtitle">Three seasons. Fourteen managers. One definitive record.</p>
@@ -147,10 +146,6 @@
           <div class="stat-item">
             <span class="stat-label">2024 Avg Score</span>
             <span class="stat-value">121.40</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">Games 100+ pts</span>
-            <span class="stat-value">—</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">Games 125+ pts</span>
@@ -314,30 +309,22 @@
 
   </main>
 
-  </div><!-- end .page-body -->
+  <!-- ===== DECORATIVE FOOTER OVERLAY ===== -->
+  <div class="deco-footer">
+    <img src="images/footer.png" alt="" role="presentation" />
+  </div>
 
-  <!-- ===== FOOTER IMAGE ===== -->
-  <footer class="site-footer">
-    <img src="images/footer.png" alt="Fox League Footer" />
-  </footer>
-
-  <!-- ===== SCROLL REVEAL SCRIPT ===== -->
+  <!-- ===== SCROLL REVEAL ===== -->
   <script>
-    // Intersection Observer — fade cards in as they enter viewport
     const cards = document.querySelectorAll('.manager-card');
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          observer.unobserve(entry.target); // fire once
+          observer.unobserve(entry.target);
         }
       });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     cards.forEach(card => observer.observe(card));
   </script>
 

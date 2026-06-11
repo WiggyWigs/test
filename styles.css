@@ -2,15 +2,15 @@
    FOX LEAGUE — MANAGER RANKINGS
    Color Palette:
    --parchment:     #f2e4c4  (background base)
-   --parchment-dark:#e8d5a8  (subtle depth)
    --ink:           #2a1a0e  (primary text)
    --ink-mid:       #4a3020  (secondary text)
+   --ink-light:     #6b4c30  (tertiary text)
    --deco-orange:   #c45a1a  (Art Deco accent)
    --deco-gold:     #b8860b  (gold trim)
    --deco-dark:     #1a0a00  (near-black borders)
 ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;700;900&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -20,19 +20,13 @@
 
 :root {
   --parchment: #f2e4c4;
-  --parchment-dark: #e8d5a8;
   --parchment-mid: #ecdcb8;
   --ink: #2a1a0e;
   --ink-mid: #4a3020;
   --ink-light: #6b4c30;
   --deco-orange: #c45a1a;
-  --deco-orange-light: #d4724a;
   --deco-gold: #b8860b;
   --deco-dark: #1a0a00;
-
-  /* Side border widths — tweak these to align with your header/footer border position */
-  --border-outer: 28px;
-  --border-inner: 38px;
 }
 
 /* ---- BASE ---- */
@@ -41,7 +35,7 @@ html {
 }
 
 body {
-  background-color: var(--parchment); /* fallback if image fails to load */
+  background-color: var(--parchment); /* fallback */
   background-image: url('images/background01.png');
   background-repeat: repeat-y;
   background-size: 100% auto;
@@ -54,79 +48,61 @@ body {
 }
 
 /* ============================================
-   RUNNING SIDE BORDERS
-   These replicate the vertical lines from your
-   header/footer images down the full page body.
-   Adjust --border-outer and --border-inner above
-   to line them up with the actual image borders.
+   DECORATIVE OVERLAYS
+   These sit on top of the continuous background.
+   They are purely visual — not structural.
 ============================================ */
 
-/* Wrapper that carries the side borders */
-.page-body {
-  position: relative;
-  z-index: 10;
-}
-
-/* Left border set */
-.page-body::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--border-outer);
-  width: 0;
-  border-left: 2px solid var(--deco-dark);
-  border-right: 1.5px solid var(--deco-orange);
-  pointer-events: none;
-  z-index: 20;
-}
-
-/* Right border set */
-.page-body::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: var(--border-outer);
-  width: 0;
-  border-right: 2px solid var(--deco-dark);
-  border-left: 1.5px solid var(--deco-orange);
-  pointer-events: none;
-  z-index: 20;
-}
-
-/* ---- HEADER IMAGE ---- */
-.site-header {
+/* ---- HEADER OVERLAY ---- */
+/* Pinned to top, full width, pointer-events off so it doesn't block scrolling */
+.deco-header {
   position: relative;
   width: 100%;
-  z-index: 10;
+  z-index: 20;
   line-height: 0;
+  pointer-events: none;
 }
 
-.site-header img {
+.deco-header img {
   width: 100%;
   height: auto;
   display: block;
 }
 
-/* Soft fade on the bottom of the header into parchment */
-.site-header::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to bottom, transparent, var(--parchment));
+/* ---- FOOTER OVERLAY ---- */
+.deco-footer {
+  position: relative;
+  width: 100%;
+  z-index: 20;
+  line-height: 0;
   pointer-events: none;
+  margin-top: 2rem;
 }
 
-/* ---- PAGE TITLE BLOCK ---- */
+.deco-footer img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---- LOGO ---- */
+.league-logo {
+  display: block;
+  margin: 0 auto 1rem;
+  width: clamp(80px, 12vw, 140px);
+  height: auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* ============================================
+   PAGE TITLE
+============================================ */
 .page-title {
   position: relative;
   z-index: 10;
   text-align: center;
-  padding: 2.5rem 5rem 1.5rem;
+  padding: 2rem 2rem 1.5rem;
 }
 
 .page-title .eyebrow {
@@ -156,13 +132,15 @@ body {
   margin-top: 0.75rem;
 }
 
-/* ---- DECO DIVIDER ---- */
+/* ============================================
+   DECO DIVIDER
+============================================ */
 .deco-divider {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  padding: 1rem 5rem;
+  padding: 1rem 2rem;
   position: relative;
   z-index: 10;
 }
@@ -192,19 +170,20 @@ body {
   flex-shrink: 0;
 }
 
-/* ---- RANKINGS CONTAINER ---- */
+/* ============================================
+   RANKINGS
+============================================ */
 .rankings {
   position: relative;
   z-index: 10;
-  max-width: 900px;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 0 5rem 4rem;
+  padding: 0 2rem 4rem;
 }
 
 /* ---- MANAGER CARD ---- */
 .manager-card {
   position: relative;
-  margin-bottom: 0;
   padding: 3rem 0 2rem;
   opacity: 0;
   transform: translateY(30px);
@@ -221,8 +200,8 @@ body {
   border-bottom: none;
 }
 
-/* Rank number — ghost behind each card */
-.manager-card .rank-ghost {
+/* Ghost rank number behind each card */
+.rank-ghost {
   position: absolute;
   top: 1rem;
   left: -0.5rem;
@@ -238,13 +217,12 @@ body {
   letter-spacing: -0.05em;
 }
 
-/* Card inner layout */
 .card-inner {
   position: relative;
   z-index: 1;
 }
 
-/* Rank + name header */
+/* Rank + name */
 .card-header {
   display: flex;
   align-items: baseline;
@@ -312,7 +290,7 @@ body {
   color: var(--deco-orange);
 }
 
-/* Narrative body */
+/* Narrative */
 .card-narrative {
   font-family: 'IM Fell English', serif;
   font-size: 1rem;
@@ -320,50 +298,12 @@ body {
   color: var(--ink-mid);
 }
 
-/* ---- FOOTER IMAGE ---- */
-.site-footer {
-  position: relative;
-  width: 100%;
-  z-index: 10;
-  line-height: 0;
-}
-
-.site-footer img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Soft fade on the top of the footer from parchment */
-.site-footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to top, transparent, var(--parchment));
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* ---- RESPONSIVE ---- */
-@media (max-width: 768px) {
-  :root {
-    --border-outer: 12px;
-    --border-inner: 20px;
-  }
-
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media (max-width: 600px) {
   .rankings {
-    padding: 0 2rem 3rem;
-  }
-
-  .page-title {
-    padding: 2rem 2.5rem 1.5rem;
-  }
-
-  .deco-divider {
-    padding: 1rem 2.5rem;
+    padding: 0 1.25rem 3rem;
   }
 
   .stats-bar {
