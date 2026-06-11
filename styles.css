@@ -1,13 +1,12 @@
 /* ============================================
    FOX LEAGUE — MANAGER RANKINGS
    Color Palette:
-   --parchment:     #f2e4c4  (background base)
-   --ink:           #2a1a0e  (primary text)
-   --ink-mid:       #4a3020  (secondary text)
-   --ink-light:     #6b4c30  (tertiary text)
-   --deco-orange:   #c45a1a  (Art Deco accent)
-   --deco-gold:     #b8860b  (gold trim)
-   --deco-dark:     #1a0a00  (near-black borders)
+   --parchment:   #f2e4c4  (background base)
+   --ink:         #2a1a0e  (primary text)
+   --ink-mid:     #4a3020  (secondary text)
+   --ink-light:   #6b4c30  (tertiary text)
+   --deco-orange: #c45a1a  (Art Deco accent)
+   --deco-gold:   #b8860b  (gold trim)
 ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;700;900&display=swap');
@@ -26,16 +25,18 @@
   --ink-light: #6b4c30;
   --deco-orange: #c45a1a;
   --deco-gold: #b8860b;
-  --deco-dark: #1a0a00;
 }
 
-/* ---- BASE ---- */
+/* ============================================
+   BASE — tiling parchment background
+============================================ */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--parchment); /* fallback */
+  position: relative;
+  background-color: var(--parchment);       /* fallback if image fails */
   background-image: url('images/background01.png');
   background-repeat: repeat-y;
   background-size: 100% auto;
@@ -48,64 +49,59 @@ body {
 }
 
 /* ============================================
-   DECORATIVE OVERLAYS
-   These sit on top of the continuous background.
-   They are purely visual — not structural.
+   HERO SECTION
+   Full viewport height. Both images are
+   absolutely positioned inside it, centered,
+   overlapping. JS moves them on scroll.
 ============================================ */
-
-/* ---- HEADER OVERLAY ---- */
-/* Pinned to top, full width, pointer-events off so it doesn't block scrolling */
-.deco-header {
+.hero {
   position: relative;
   width: 100%;
-  z-index: 20;
-  line-height: 0;
-  pointer-events: none;
+  height: 100vh;           /* full screen height */
+  overflow: hidden;
 }
 
-.deco-header img {
-  width: 100%;
+/* league-text.png — upper area, behind */
+.hero-text-img {
+  position: absolute;
+  top: 15%;                /* anchored toward top */
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(260px, 55vw, 700px);
   height: auto;
-  display: block;
+  z-index: 1;              /* behind logo */
+  will-change: transform, opacity;
 }
 
-/* ---- FOOTER OVERLAY ---- */
-.deco-footer {
-  position: relative;
-  width: 100%;
-  z-index: 20;
-  line-height: 0;
-  pointer-events: none;
-  margin-top: 2rem;
-}
-
-.deco-footer img {
-  width: 100%;
+/* logo.png — lower area, in front */
+.hero-logo-img {
+  position: absolute;
+  bottom: 15%;             /* anchored toward bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(120px, 22vw, 300px);
   height: auto;
-  display: block;
-}
-
-/* ---- LOGO ---- */
-.league-logo {
-  display: block;
-  margin: 0 auto 1rem;
-  width: clamp(80px, 12vw, 140px);
-  height: auto;
-  position: relative;
-  z-index: 10;
+  z-index: 2;              /* in front of text */
+  will-change: transform, opacity;
 }
 
 /* ============================================
-   PAGE TITLE
+   INTRO SECTION
+   Appears after hero fades. Title block.
 ============================================ */
-.page-title {
+.intro {
   position: relative;
   z-index: 10;
   text-align: center;
-  padding: 2rem 2rem 1.5rem;
+  padding: 5rem 2rem 2rem;
 }
 
-.page-title .eyebrow {
+.intro-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.eyebrow {
   font-family: 'Cinzel', serif;
   font-size: 0.75rem;
   font-weight: 700;
@@ -115,7 +111,7 @@ body {
   margin-bottom: 0.75rem;
 }
 
-.page-title h1 {
+.intro h1 {
   font-family: 'Cinzel', serif;
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 900;
@@ -124,7 +120,7 @@ body {
   letter-spacing: 0.05em;
 }
 
-.page-title .subtitle {
+.subtitle {
   font-family: 'IM Fell English', serif;
   font-style: italic;
   font-size: 1.1rem;
@@ -200,7 +196,7 @@ body {
   border-bottom: none;
 }
 
-/* Ghost rank number behind each card */
+/* Ghost rank number */
 .rank-ghost {
   position: absolute;
   top: 1rem;
@@ -222,7 +218,6 @@ body {
   z-index: 1;
 }
 
-/* Rank + name */
 .card-header {
   display: flex;
   align-items: baseline;
@@ -258,7 +253,6 @@ body {
   display: block;
 }
 
-/* Stats bar */
 .stats-bar {
   display: flex;
   flex-wrap: wrap;
@@ -290,7 +284,6 @@ body {
   color: var(--deco-orange);
 }
 
-/* Narrative */
 .card-narrative {
   font-family: 'IM Fell English', serif;
   font-size: 1rem;
@@ -299,9 +292,35 @@ body {
 }
 
 /* ============================================
+   FOOTER OVERLAY
+============================================ */
+.deco-footer {
+  position: relative;
+  width: 100%;
+  z-index: 10;
+  line-height: 0;
+  margin-top: 2rem;
+  pointer-events: none;
+}
+
+.deco-footer img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================================
    RESPONSIVE
 ============================================ */
 @media (max-width: 600px) {
+  .hero-text-img {
+    width: 85vw;
+  }
+
+  .hero-logo-img {
+    width: 40vw;
+  }
+
   .rankings {
     padding: 0 1.25rem 3rem;
   }
@@ -321,6 +340,11 @@ body {
   .manager-card {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+
+  .hero-text-img,
+  .hero-logo-img {
     transition: none;
   }
 }
