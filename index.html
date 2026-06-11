@@ -3,27 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Manager Rankings — Fox League</title>
+  <title>Fox Mill Fantasy Football Club</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
   <!-- ===================================================
     HERO SECTION
-    Two images stacked, centered, overlapping.
-    league-text.png: upper position, behind (z-index 1)
-    logo.png:        lower position, in front (z-index 2)
-    JavaScript peels them apart and fades both on scroll.
-    Fully reversible — scroll back up restores them.
+    header_background.png: fixed full-viewport background
+    players.png:  centered upper area, behind logo (z-index 1)
+    logo.png:     centered lower area, in front (z-index 2)
+
+    On scroll:
+      - header_background fades out → reveals parchment tile
+      - players.png drifts UP and fades
+      - logo.png drifts DOWN and fades
+    Fully reversible on scroll back up.
   =================================================== -->
   <section class="hero" id="hero">
-    <img class="hero-text-img" src="images/league-text.png" alt="Fox League" />
-    <img class="hero-logo-img" src="images/logo.png" alt="Fox League Logo" />
+    <!-- The poster background — fades out as you scroll -->
+    <div class="hero-bg"></div>
+
+    <!-- Overlay images — peel apart as you scroll -->
+    <img class="hero-players-img" src="images/players.png" alt="" />
+    <img class="hero-logo-img"    src="images/logo.png"    alt="Fox Mill Fantasy Football Club" />
   </section>
 
   <!-- ===================================================
     INTRO SECTION
-    Revealed after hero fades away.
+    Revealed beneath hero as it fades.
   =================================================== -->
   <section class="intro">
     <div class="intro-inner">
@@ -329,41 +337,38 @@
 
   <!-- ===================================================
     SCROLL SCRIPT
-    Drives the hero parallax and card reveal animations.
   =================================================== -->
   <script>
-    // ---- HERO PARALLAX ----
-    // Reads scroll position and moves/fades both hero images.
-    // league-text.png travels UP, logo.png travels DOWN.
-    // Both fade to invisible over the first 80% of the hero height.
-
     const hero        = document.getElementById('hero');
-    const heroText    = document.querySelector('.hero-text-img');
+    const heroBg      = document.querySelector('.hero-bg');
+    const heroPlayers = document.querySelector('.hero-players-img');
     const heroLogo    = document.querySelector('.hero-logo-img');
 
     function updateHero() {
-      const scrollY      = window.scrollY;
-      const heroHeight   = hero.offsetHeight;
-      // progress: 0 at top, 1 when scrolled past full hero height
-      const progress     = Math.min(scrollY / (heroHeight * 0.8), 1);
-      const opacity      = 1 - progress;
+      const scrollY    = window.scrollY;
+      const heroH      = hero.offsetHeight;
+      // progress: 0 at top of page, 1 when scrolled one full hero height
+      const progress   = Math.min(scrollY / (heroH * 0.75), 1);
+      const opacity    = 1 - progress;
 
-      // Text image drifts UP (negative translateY)
-      const textDrift    = progress * -120;
-      // Logo drifts DOWN (positive translateY)
-      const logoDrift    = progress * 120;
+      // Background poster fades out entirely
+      heroBg.style.opacity = opacity;
 
-      heroText.style.transform  = `translateX(-50%) translateY(${textDrift}px)`;
-      heroText.style.opacity    = opacity;
+      // players.png drifts UP
+      const playersDrift = progress * -140;
+      heroPlayers.style.transform = `translateX(-50%) translateY(${playersDrift}px)`;
+      heroPlayers.style.opacity   = opacity;
 
-      heroLogo.style.transform  = `translateX(-50%) translateY(${logoDrift}px)`;
-      heroLogo.style.opacity    = opacity;
+      // logo.png drifts DOWN
+      const logoDrift = progress * 140;
+      heroLogo.style.transform = `translateX(-50%) translateY(${logoDrift}px)`;
+      heroLogo.style.opacity   = opacity;
     }
 
     window.addEventListener('scroll', updateHero, { passive: true });
-    updateHero(); // set initial state
+    updateHero();
 
-    // ---- CARD SCROLL REVEAL ----
+    // Card reveal on scroll
     const cards = document.querySelectorAll('.manager-card');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {

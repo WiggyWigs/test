@@ -1,12 +1,12 @@
 /* ============================================
-   FOX LEAGUE — MANAGER RANKINGS
+   FOX MILL FANTASY FOOTBALL CLUB
    Color Palette:
-   --parchment:   #f2e4c4  (background base)
-   --ink:         #2a1a0e  (primary text)
-   --ink-mid:     #4a3020  (secondary text)
-   --ink-light:   #6b4c30  (tertiary text)
-   --deco-orange: #c45a1a  (Art Deco accent)
-   --deco-gold:   #b8860b  (gold trim)
+   --parchment:   #f2e4c4
+   --ink:         #2a1a0e
+   --ink-mid:     #4a3020
+   --ink-light:   #6b4c30
+   --deco-orange: #c45a1a
+   --deco-gold:   #b8860b
 ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;700;900&display=swap');
@@ -19,7 +19,6 @@
 
 :root {
   --parchment: #f2e4c4;
-  --parchment-mid: #ecdcb8;
   --ink: #2a1a0e;
   --ink-mid: #4a3020;
   --ink-light: #6b4c30;
@@ -27,16 +26,15 @@
   --deco-gold: #b8860b;
 }
 
-/* ============================================
-   BASE — tiling parchment background
-============================================ */
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
+/* ============================================
+   BODY — tiling parchment, always present
+   The hero background sits ON TOP of this.
+   As it fades, the parchment is revealed.
+============================================ */
 body {
-  position: relative;
-  background-color: var(--parchment);       /* fallback if image fails */
+  background-color: var(--parchment);
   background-image: url('images/background01.png');
   background-repeat: repeat-y;
   background-size: 100% auto;
@@ -50,44 +48,59 @@ body {
 
 /* ============================================
    HERO SECTION
-   Full viewport height. Both images are
-   absolutely positioned inside it, centered,
-   overlapping. JS moves them on scroll.
+   Full viewport. Fixed poster background fades
+   out as you scroll, revealing parchment below.
+   Two overlay images peel apart simultaneously.
 ============================================ */
 .hero {
   position: relative;
   width: 100%;
-  height: 100vh;           /* full screen height */
+  height: 100vh;
   overflow: hidden;
 }
 
-/* league-text.png — upper area, behind */
-.hero-text-img {
+/* The poster — fixed, full coverage, fades on scroll */
+.hero-bg {
+  position: fixed;          /* stays locked while page scrolls */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: url('images/header_background.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 5;               /* above parchment body, below overlay images */
+  will-change: opacity;
+}
+
+/* players.png — upper center, behind logo */
+.hero-players-img {
   position: absolute;
-  top: 15%;                /* anchored toward top */
+  top: 18%;
   left: 50%;
   transform: translateX(-50%);
-  width: clamp(260px, 55vw, 700px);
+  width: clamp(200px, 45vw, 600px);
   height: auto;
-  z-index: 1;              /* behind logo */
+  z-index: 7;               /* above bg, below logo */
   will-change: transform, opacity;
 }
 
-/* logo.png — lower area, in front */
+/* logo.png — lower center, in front */
 .hero-logo-img {
   position: absolute;
-  bottom: 15%;             /* anchored toward bottom */
+  bottom: 22%;
   left: 50%;
   transform: translateX(-50%);
-  width: clamp(120px, 22vw, 300px);
+  width: clamp(100px, 18vw, 260px);
   height: auto;
-  z-index: 2;              /* in front of text */
+  z-index: 8;               /* topmost in hero */
   will-change: transform, opacity;
 }
 
 /* ============================================
    INTRO SECTION
-   Appears after hero fades. Title block.
+   Sits below the hero. Visible once hero fades.
 ============================================ */
 .intro {
   position: relative;
@@ -177,7 +190,6 @@ body {
   padding: 0 2rem 4rem;
 }
 
-/* ---- MANAGER CARD ---- */
 .manager-card {
   position: relative;
   padding: 3rem 0 2rem;
@@ -192,11 +204,8 @@ body {
   transform: translateY(0);
 }
 
-.manager-card:last-child {
-  border-bottom: none;
-}
+.manager-card:last-child { border-bottom: none; }
 
-/* Ghost rank number */
 .rank-ghost {
   position: absolute;
   top: 1rem;
@@ -210,13 +219,9 @@ body {
   pointer-events: none;
   user-select: none;
   z-index: 0;
-  letter-spacing: -0.05em;
 }
 
-.card-inner {
-  position: relative;
-  z-index: 1;
-}
+.card-inner { position: relative; z-index: 1; }
 
 .card-header {
   display: flex;
@@ -263,11 +268,7 @@ body {
   border-left: 3px solid var(--deco-orange);
 }
 
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-}
+.stat-item { display: flex; flex-direction: column; gap: 0.1rem; }
 
 .stat-label {
   font-family: 'Cinzel', serif;
@@ -292,7 +293,7 @@ body {
 }
 
 /* ============================================
-   FOOTER OVERLAY
+   FOOTER
 ============================================ */
 .deco-footer {
   position: relative;
@@ -313,21 +314,9 @@ body {
    RESPONSIVE
 ============================================ */
 @media (max-width: 600px) {
-  .hero-text-img {
-    width: 85vw;
-  }
-
-  .hero-logo-img {
-    width: 40vw;
-  }
-
-  .rankings {
-    padding: 0 1.25rem 3rem;
-  }
-
-  .stats-bar {
-    gap: 0.5rem 1.25rem;
-  }
+  .hero-players-img { width: 80vw; }
+  .hero-logo-img    { width: 35vw; }
+  .rankings         { padding: 0 1.25rem 3rem; }
 
   .card-header {
     flex-direction: column;
@@ -335,16 +324,8 @@ body {
   }
 }
 
-/* ---- REDUCED MOTION ---- */
 @media (prefers-reduced-motion: reduce) {
-  .manager-card {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  .hero-text-img,
-  .hero-logo-img {
-    transition: none;
-  }
+  .manager-card { opacity: 1; transform: none; transition: none; }
+  .hero-players-img,
+  .hero-logo-img  { transition: none; }
 }
