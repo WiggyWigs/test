@@ -1,180 +1,314 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* ============================================
+   FOX LEAGUE — MANAGER RANKINGS
+   Color Palette:
+   --parchment:     #f2e4c4  (background base)
+   --parchment-dark:#e8d5a8  (subtle depth)
+   --ink:           #2a1a0e  (primary text)
+   --ink-mid:       #4a3020  (secondary text)
+   --deco-orange:   #c45a1a  (Art Deco accent)
+   --deco-gold:     #b8860b  (gold trim)
+   --deco-dark:     #1a0a00  (near-black borders)
+============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;700;900&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-
-    background:#e7dfcf;
-
-    font-family:Georgia, serif;
-
-    color:#222;
-
-    display:flex;
-    justify-content:center;
+:root {
+  --parchment: #f2e4c4;
+  --parchment-dark: #e8d5a8;
+  --parchment-mid: #ecdcb8;
+  --ink: #2a1a0e;
+  --ink-mid: #4a3020;
+  --ink-light: #6b4c30;
+  --deco-orange: #c45a1a;
+  --deco-orange-light: #d4724a;
+  --deco-gold: #b8860b;
+  --deco-dark: #1a0a00;
 }
 
-.paper{
-
-    width:min(1100px,92vw);
-
-    background-image:url("images/master-frame.png");
-
-    background-repeat:repeat-y;
-
-    background-size:100% auto;
-
-    min-height:100vh;
-
-    padding-bottom:100px;
+/* ---- BASE ---- */
+html {
+  scroll-behavior: smooth;
 }
 
-.masthead img{
-
-    width:100%;
-    display:block;
+body {
+  background-color: var(--parchment);
+  color: var(--ink);
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.75;
+  overflow-x: hidden;
 }
 
-.intro{
-
-    max-width:850px;
-
-    margin:auto;
-
-    padding:80px 80px 120px 80px;
-
-    text-align:center;
+/* ---- PARCHMENT TEXTURE OVERLAY ---- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
 }
 
-.intro h1{
-
-    font-size:64px;
-
-    letter-spacing:4px;
-
-    margin-bottom:40px;
-
-    text-transform:uppercase;
-
-    color:#1d1d1d;
+/* ---- HEADER IMAGE ---- */
+.site-header {
+  position: relative;
+  width: 100%;
+  z-index: 10;
+  line-height: 0;
 }
 
-.intro p{
-
-    font-size:24px;
-
-    line-height:1.7;
+.site-header img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.manager{
-
-    display:grid;
-
-    grid-template-columns:180px 1fr;
-
-    gap:50px;
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:120px 100px;
+/* ---- PAGE TITLE BLOCK ---- */
+.page-title {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 3rem 2rem 1.5rem;
+  background: linear-gradient(180deg, var(--parchment) 0%, var(--parchment-mid) 100%);
 }
 
-.rank{
-
-    font-size:140px;
-
-    font-weight:bold;
-
-    color:#d96e11;
-
-    line-height:1;
+.page-title .eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  color: var(--deco-orange);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
 }
 
-.content h2{
-
-    font-size:52px;
-
-    margin-bottom:10px;
-
-    text-transform:uppercase;
+.page-title h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1.1;
+  letter-spacing: 0.05em;
 }
 
-.content h3{
-
-    font-size:28px;
-
-    color:#d96e11;
-
-    margin-bottom:30px;
-
-    font-weight:normal;
-
-    text-transform:uppercase;
+.page-title .subtitle {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--ink-light);
+  margin-top: 0.75rem;
 }
 
-.content p{
-
-    font-size:26px;
-
-    line-height:1.7;
+/* ---- DECO DIVIDER ---- */
+.deco-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  position: relative;
+  z-index: 10;
 }
 
-.footer{
-
-    margin-top:150px;
+.deco-divider::before,
+.deco-divider::after {
+  content: '';
+  flex: 1;
+  max-width: 300px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--deco-orange), transparent);
 }
 
-.footer img{
-
-    width:100%;
-    display:block;
+.deco-divider .diamond {
+  width: 10px;
+  height: 10px;
+  background: var(--deco-orange);
+  transform: rotate(45deg);
+  flex-shrink: 0;
 }
 
-@media (max-width:900px){
+.deco-divider .diamond-sm {
+  width: 6px;
+  height: 6px;
+  background: var(--deco-gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
 
-    .intro{
+/* ---- RANKINGS CONTAINER ---- */
+.rankings {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
 
-        padding:60px 40px;
-    }
+/* ---- MANAGER CARD ---- */
+.manager-card {
+  position: relative;
+  margin-bottom: 0;
+  padding: 3rem 0 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  border-bottom: 1px solid rgba(196, 90, 26, 0.2);
+}
 
-    .intro h1{
+.manager-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-        font-size:38px;
-    }
+.manager-card:last-child {
+  border-bottom: none;
+}
 
-    .intro p{
+/* Rank number — the ghost behind each card */
+.manager-card .rank-ghost {
+  position: absolute;
+  top: 1rem;
+  left: -0.5rem;
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  font-size: clamp(6rem, 15vw, 10rem);
+  line-height: 1;
+  color: var(--deco-orange);
+  opacity: 0.07;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  letter-spacing: -0.05em;
+}
 
-        font-size:20px;
-    }
+/* Card inner layout */
+.card-inner {
+  position: relative;
+  z-index: 1;
+}
 
-    .manager{
+/* Rank + name header */
+.card-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+  flex-wrap: wrap;
+}
 
-        grid-template-columns:1fr;
+.card-rank {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--deco-orange);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
 
-        padding:70px 40px;
-    }
+.card-name {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.03em;
+}
 
-    .rank{
+.card-nickname {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--deco-orange);
+  margin-bottom: 1.25rem;
+  display: block;
+}
 
-        font-size:80px;
-    }
+/* Stats bar */
+.stats-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1rem;
+  background: rgba(196, 90, 26, 0.06);
+  border-left: 3px solid var(--deco-orange);
+}
 
-    .content h2{
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
 
-        font-size:34px;
-    }
+.stat-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+}
 
-    .content h3{
+.stat-value {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--deco-orange);
+}
 
-        font-size:20px;
-    }
+/* Narrative body */
+.card-narrative {
+  font-family: 'IM Fell English', serif;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--ink-mid);
+}
 
-    .content p{
+/* ---- FOOTER IMAGE ---- */
+.site-footer {
+  position: relative;
+  width: 100%;
+  z-index: 10;
+  line-height: 0;
+  margin-top: 2rem;
+}
 
-        font-size:18px;
-    }
+.site-footer img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 600px) {
+  .rankings {
+    padding: 0 1.25rem 3rem;
+  }
+
+  .stats-bar {
+    gap: 0.5rem 1.25rem;
+  }
+
+  .card-header {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+/* ---- REDUCED MOTION ---- */
+@media (prefers-reduced-motion: reduce) {
+  .manager-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
