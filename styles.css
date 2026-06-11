@@ -41,26 +41,16 @@ html {
 }
 
 body {
-  background-color: var(--parchment);
+  background-color: var(--parchment); /* fallback if image fails to load */
+  background-image: url('images/background01.png');
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  background-position: top center;
   color: var(--ink);
   font-family: 'IM Fell English', Georgia, serif;
   font-size: 17px;
   line-height: 1.75;
   overflow-x: hidden;
-}
-
-/* ---- PARCHMENT TEXTURE OVERLAY ---- */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  mix-blend-mode: multiply;
-  opacity: 0.5;
 }
 
 /* ============================================
