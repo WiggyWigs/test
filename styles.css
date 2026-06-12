@@ -94,7 +94,7 @@ body {
 /* Sits just above the FOX MILL title bar */
 .hero-logo-img {
   position: absolute;
-  bottom: 10%;
+  top: 10%;
   left: 50%;
   transform: translateX(-50%);
   width: clamp(100px, 28vw, 220px);
