@@ -356,7 +356,7 @@
 
       // players.png drifts UP
       const playersDrift = progress * -140;
-      heroPlayers.style.transform = `translateX(-50%) translateY(${playersDrift}px)`;
+      heroPlayers.style.transform = `translate(-50%, calc(-100% + ${playersDrift}px))`;
       heroPlayers.style.opacity   = opacity;
 
       // logo.png drifts DOWN
