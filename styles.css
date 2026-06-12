@@ -83,7 +83,7 @@ body {
    its BOTTOM edge (not top), so resizing keeps feet locked in place. */
 .hero-players-img {
   position: absolute;
-  top: 64%;
+  top: 90%;
   left: 50%;
   transform: translate(-50%, -100%);  /* shifts image up by its own height */
   width: clamp(200px, 26vw, 560px);
