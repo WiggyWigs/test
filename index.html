@@ -348,7 +348,7 @@
       const scrollY    = window.scrollY;
       const heroH      = hero.offsetHeight;
       // progress: 0 at top of page, 1 when scrolled one full hero height
-      const progress   = Math.min(scrollY / (heroH * 0.75), 1);
+      const progress   = Math.min(scrollY / (heroH * 1.25), 1);
       const opacity    = 1 - progress;
 
       // Background poster fades out entirely
