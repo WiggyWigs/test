@@ -81,7 +81,7 @@ body {
 /* Sits in the open sky area above the stadiums */
 .hero-players-img {
   position: absolute;
-  top: -8%;
+  top: 10%;
   left: 50%;
   transform: translateX(-50%);
   width: clamp(200px, 30vw, 560px);
@@ -97,7 +97,7 @@ body {
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
-  width: clamp(100px, 28vw, 380px);
+  width: clamp(100px, 24vw, 380px);
   height: auto;
   z-index: 7;               /* topmost in hero */
   will-change: transform, opacity;
